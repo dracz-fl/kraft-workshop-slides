@@ -111,14 +111,12 @@ Grab commands from here:
 
 ## What's in the box
 
+- Small project, with issues planted for the demo.
 - `CLAUDE.md` — deliberately bloated (~340 lines). We trim it in Part 1.
 - `workshop-context/triage/` — sample tickets. Used in Parts 3 and 5.
 - `workshop-context/mcp/` — the MCP server we wire up in Part 4.
 
-<small>Running scenario: you're the on-call support engineer. Tickets come in. Most are noise. One has a real data bug.</small>
-
-Note:
-Kick the clone off before the LLMs slide so people aren't waiting on bun install when Part 1's demo lands. ~60s of buffer.
+<img src="../assets/slides-screenshots/demo-app-screenshot.png" style="max-width: 85%; max-height: 480px; border-radius: 6px;">
 
 ---
 
@@ -144,9 +142,6 @@ They predict the next token, one at a time.
 
 <small>tokens ≠ characters. Different models tokenize differently — same prompt, different cost.</small> <!-- .element: class="fragment" -->
 
-Note:
-Don't overexplain tokens. That's a low-level concept. Move on quickly.
-
 ---
 
 ## The context window
@@ -171,9 +166,6 @@ Don't overexplain tokens. That's a low-level concept. Move on quickly.
 
 <small class="fragment">Common misconception: people *assume* the agent "knows" the repo. It doesn't.</small>
 
-Note:
-Biggest source of confusion in the room. Land it hard. Everything else in Part 1 follows from this.
-
 ---
 
 ## What happens every turn?
@@ -196,6 +188,7 @@ That's why you see streaming — one token at a time.
 - Added to your conversation. **Keep it lean.**
 - Project-specific instructions and context.
 - A **curated** set of things the agent **can't easily discover on its own**.
+- Behavioural guidlines [like these](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md)
 
 <small>📖 [humanlayer.dev — writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)</small>
 
@@ -209,7 +202,7 @@ Three things it can't easily figure out on its own:
 
 - The map: what the stack is, where things live.
 - The purpose: why this project exists, what each part is for.
-- The local rules: `bun` not `node`, how you run tests, what counts as "verified."
+- The local rules, where to look for custom tools, how to run tests, etc...
 
 <small>Don't dump every command in. You'll get worse answers, not better.</small>
 
@@ -221,7 +214,7 @@ Three things it can't easily figure out on its own:
 
 The window has a limit. The token bill isn't the real cost though.
 
-The real cost is *context rot*: recall degrades as tokens grow. Every frontier model Chroma tested showed this. <small>[(Chroma, 2025)](https://research.trychroma.com/context-rot)</small>
+The real cost is *context rot*: recall degrades as tokens grow. Every frontier model showed this behaviour. <small>[(Chroma, 2025)](https://research.trychroma.com/context-rot)</small>
 
 - Info buried mid-prompt: ~30% accuracy drop. The model literally forgets the middle.
 - Every token competes for attention. More tokens, thinner signal.
@@ -236,7 +229,7 @@ Chroma tested 18 frontier models (Claude Opus 4, GPT-4.1, Gemini 2.5). All showe
 
 ## Context rot in one chart
 
-<img src="../assets/slides-screenshots/context-rot-needle-chart.png" style="max-width: 85%; max-height: 480px; border-radius: 6px;">
+<img src="../assets/slides-screenshots/context-rot.png" style="max-width: 85%; max-height: 480px; border-radius: 6px;">
 
 <small>Accuracy ↓ as input length ↑ — across 18 frontier models. [(Chroma, 2025)](https://research.trychroma.com/context-rot)</small>
 
