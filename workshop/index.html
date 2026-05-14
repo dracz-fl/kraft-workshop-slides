@@ -1,25 +1,111 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Your AI Workflow Sucks?</title>
-    <link rel="shortcut icon" href="./favicon.ico" />
-    <link rel="stylesheet" href="./dist/reset.css" />
-    <link rel="stylesheet" href="./dist/reveal.css" />
-    <link rel="stylesheet" href="./dist/theme/black.css" id="theme" />
-    <link rel="stylesheet" href="./css/highlight/atom-one-dark.css" />
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
 
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
   </head>
   <body>
     <div class="reveal">
-      <div class="slides">
-        <section data-markdown data-separator="\r?\n---\r?\n" data-separator-vertical="\r?\n----\r?\n">
-          <textarea data-template>
-            
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- .slide: data-background-color="#0d1b2a" -->
+<style>
+  /* Formlabs palette
+     deep blue   #003594  primary brand
+     blue        #0762C8  accent
+     light blue  #5db5ff  on-dark accent
+     orange      #FF5A00  warning accent
+     near-black  #232018  warm dark
+     off-white   #FEFDF9  warm light
+  */
+  .reveal { font-family: -apple-system, "Inter", "Helvetica Neue", Arial, sans-serif; }
+  .reveal h1, .reveal h2, .reveal h3 { color: #FEFDF9; letter-spacing: -0.01em; }
+  .reveal a { color: #5db5ff; text-decoration: none; border-bottom: 1px solid rgba(93,181,255,0.4); }
+  .reveal a:hover { color: #82AFE3; border-bottom-color: #82AFE3; }
+  .reveal strong { color: #5db5ff; }
+  .reveal blockquote { border-left: 4px solid #0762C8; background: rgba(7,98,200,0.08); padding: 0.6em 1em; }
+  .reveal code { background: rgba(255,255,255,0.06); color: #FEFDF9; padding: 0.05em 0.35em; border-radius: 3px; }
+  .reveal pre code { background: transparent; }
+  .reveal table th { color: #5db5ff; border-bottom: 2px solid #0762C8; }
+</style>
 
 # Your Prompts Aren't Cooking?
 
@@ -27,10 +113,9 @@
 
 A hands-on workshop on agentic coding workflows.
 
-Note:
-Welcome the room. Energy first, content second. ~30 seconds. Then move.
-
----
+<aside class="notes"><p>Welcome the room. Energy first, content second. ~30 seconds. Then move.</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## About me
 
@@ -39,14 +124,13 @@ Welcome the room. Energy first, content second. ~30 seconds. Then move.
 - Used Copilot since it was a fancy autocomplete.
 - I rarely write code directly anymore — agents do the heavy lifting.
 
-Note:
-Premise of the day: be a good foreman. Direct the agent without repeating yourself.
-
----
+<aside class="notes"><p>Premise of the day: be a good foreman. Direct the agent without repeating yourself.</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#232018" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Quick temperature check
 
-<!-- .slide: data-background-color="#1a1a1a" -->
+
 
 > Who has tried Claude Code / Cursor / Copilot?
 >
@@ -54,10 +138,9 @@ Premise of the day: be a good foreman. Direct the agent without repeating yourse
 >
 > Who got *frustrated*? <!-- .element: class="fragment" -->
 
-Note:
-Tally hands. Most "AI doesn't work for me" stories are context problems, not model problems. That's the whole pitch for today.
-
----
+<aside class="notes"><p>Tally hands. Most &quot;AI doesn&#39;t work for me&quot; stories are context problems, not model problems. That&#39;s the whole pitch for today.</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What you'll leave with
 
@@ -65,16 +148,16 @@ Tally hands. Most "AI doesn't work for me" stories are context problems, not mod
 - Knowing when to use **`AGENTS.md`** vs **skills** vs **MCP** <!-- .element: class="fragment" -->
 - A workflow for **building your own skills** <!-- .element: class="fragment" -->
 - Seen how the pieces compose into a real workflow <!-- .element: class="fragment" -->
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The map
 
-<!-- .slide: style="font-size: 0.85em" -->
+
 
 | Part | Topic | Demo |
 |---|---|---|
-| 1 | Context — what goes in the window | CLAUDE.md keep/cut |
+| 1 | Context — what goes in the window | CLAUDE.md trim & split |
 | 2 | Skills — using ones others made | Install + use a skill |
 | ☕ | Break |  |
 | 3 | Skills — building your own | `skill-creator` |
@@ -82,12 +165,12 @@ Tally hands. Most "AI doesn't work for me" stories are context problems, not mod
 | 5 | Capstone | Compose all of the above |
 
 <small>Demos are the spine. If we're behind, talk-time gets cut first.</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#232018" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Meet the demo-app
 
-<!-- .slide: data-background-color="#1a1a1a" -->
+
 <!-- .slide: style="font-size: 0.88em" -->
 
 A SvelteKit + Drizzle + SQLite app. Pretend backend of an order management system. Four tables: `customers`, `orders`, `order_items`, `shipments`.
@@ -106,8 +189,8 @@ cd demo-app && \
 Grab commands from here:
 
 <https://bit.ly/kraft-formlabs-workshop>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What's in the box
 
@@ -116,11 +199,9 @@ Grab commands from here:
 - `workshop-context/triage/` — sample tickets. Used in Parts 3 and 5.
 - `workshop-context/mcp/` — the MCP server we wire up in Part 4.
 
-<img src="../assets/slides-screenshots/demo-app-screenshot.png" style="max-width: 85%; max-height: 480px; border-radius: 6px;">
-
----
-
-<!-- .slide: data-background-color="#1b263b" -->
+<img src="assets/slides-screenshots/demo-app-screenshot.png" alt="" style="width: 800px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Part 1
 
@@ -129,32 +210,32 @@ Grab commands from here:
 > Why does the agent say it can't find the file you literally just edited?
 
 *This part answers that.*
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## LLMs in one slide
 
-<!-- .slide: data-background-color="#0d1b2a" -->
+
 
 LLMs are **fancy autocomplete on steroids.**
 
 They predict the next token, one at a time.
 
 <small>tokens ≠ characters. Different models tokenize differently — same prompt, different cost.</small> <!-- .element: class="fragment" -->
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The context window
 
 > An LLM is a function. Input: a context window. Output: tokens.
 >
 > The window is finite. What goes in is what the model has to work with. Nothing else.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.9em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What's in the context window?
 
-<!-- .slide: style="font-size: 0.9em" -->
+
 
 | **Always in** | **Not in** — *unless loaded* |
 |---|---|
@@ -165,8 +246,8 @@ They predict the next token, one at a time.
 > The agent only sees what gets loaded.
 
 <small class="fragment">Common misconception: people *assume* the agent "knows" the repo. It doesn't.</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What happens every turn?
 
@@ -180,19 +261,22 @@ They predict the next token, one at a time.
 ```
 
 That's why you see streaming — one token at a time.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## AGENTS.md / CLAUDE.md
+
+> What makes a good AGENTS.md / CLAUDE.md?
 
 - Added to your conversation. **Keep it lean.**
 - Project-specific instructions and context.
 - A **curated** set of things the agent **can't easily discover on its own**.
 - Behavioural guidlines [like these](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md)
+- Pointers to other resources for documentation, allowing the AI to read them on demand.
 
 <small>📖 [humanlayer.dev — writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Onboarding the LLM
 
@@ -205,12 +289,12 @@ Three things it can't easily figure out on its own:
 - The local rules, where to look for custom tools, how to run tests, etc...
 
 <small>Don't dump every command in. You'll get worse answers, not better.</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.82em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Why can't I just dump everything?
 
-<!-- .slide: style="font-size: 0.82em" -->
+
 
 The window has a limit. The token bill isn't the real cost though.
 
@@ -222,22 +306,22 @@ The real cost is *context rot*: recall degrades as tokens grow. Every frontier m
 
 > Every token spends from an [attention budget](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents). The cost isn't the API bill. It's accuracy.
 
-Note:
-Chroma tested 18 frontier models (Claude Opus 4, GPT-4.1, Gemini 2.5). All showed degradation at every length increment. This is an architectural property of attention, not a training gap.
-
----
+<aside class="notes"><p>Chroma tested 18 frontier models (Claude Opus 4, GPT-4.1, Gemini 2.5). All showed degradation at every length increment. This is an architectural property of attention, not a training gap.</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Context rot in one chart
 
-<img src="../assets/slides-screenshots/context-rot.png" style="max-width: 85%; max-height: 480px; border-radius: 6px;">
+<img src="assets/slides-screenshots/context-rot.png" alt="" style="width: 800px; object-fit: fill">
+
 
 <small>Accuracy ↓ as input length ↑ — across 18 frontier models. [(Chroma, 2025)](https://research.trychroma.com/context-rot)</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#5A1A00" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Context anxiety — the dumb mode
 
-<!-- .slide: data-background-color="#2b1010" -->
+
 <!-- .slide: style="font-size: 0.9em" -->
 
 When the window fills up (or just *feels* full), the model starts to panic. You can see it:
@@ -249,115 +333,130 @@ When the window fills up (or just *feels* full), the model starts to panic. You 
 
 > Avoid triggering this. A lean context produces a sharper agent.
 
-Note:
-Observed clearly in Sonnet 4.5+: the model senses pressure and switches strategy. You can use this as a *signal* (orchestrators can listen for it) — but in normal coding work, you avoid triggering it by keeping context lean.
-
----
+<aside class="notes"><p>Observed clearly in Sonnet 4.5+: the model senses pressure and switches strategy. You can use this as a <em>signal</em> (orchestrators can listen for it) — but in normal coding work, you avoid triggering it by keeping context lean.</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The CLAUDE.md goldilocks problem
 
-<!-- .slide: style="font-size: 0.85em" -->
+
 
 | **Too little** | **Just right** | **Too much** |
 |---|:---:|---|
 | Agent guesses | Agent navigates | Agent overwhelmed |
-| Runs `npm test` instead of `bun test` | Knows the stack | Ignores key details |
+| Does something incorrectly | Knows the stack | Ignores key details |
 | Burns time discovering basics | Verifies its own work | Hallucinates anyway |
-
-> The middle is where the workshop lives.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## CLAUDE.md — keep or cut?
 
-<!-- .slide: data-background-color="#102b1a" -->
+
 
 Ask one question of every line:
 
 > If I take this out, does the agent make an unrecoverable mistake, or just a slower one?
 
 Unrecoverable means keep. That's a guardrail. Slower means cut. Let the agent figure it out, or push it into a skill.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Keep
 
-<!-- .slide: data-background-color="#102b1a" -->
+
 <!-- .slide: style="font-size: 0.78em" -->
 
-- `bun test`, not `npm test` — wrong command silently hits the wrong DB
 - Architecture invariants — "all writes go through `EventBus`"
 - Secret handling — "never commit `.env`; use `sops`"
 - Migration policy — "run `bun db:migrate` before `bun dev`"
 - Where to verify — "`bun typecheck && bun test` before declaring done"
+- Pointers — "deploy gotchas in `docs/agent/deploy.md`"
 
-> Things the agent **can't infer** and getting them wrong is **expensive**.
-
----
+> Things the agent **can't infer** and getting them wrong is **expensive**. Or a single line that tells the agent where to look.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#5A1A00" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Cut
 
-<!-- .slide: data-background-color="#2b1010" -->
+
 <!-- .slide: style="font-size: 0.78em" -->
 
 - Team bios, code of conduct, contributor lists
 - Inline API specs *(move to a skill)*
 - "ALWAYS write clean code" / "follow best practices"
-- Anything already in `package.json` — the agent reads it
-- Project history, changelogs, retrospectives
+- Anything the agent can already read — `package.json`, script headers, source code
+- Speculative / aspirational — *"we might use Redis if/when…"*, *"not present yet"*
+- Project history, changelogs, retrospectives — *why* we chose X over Y
 - Markdown style rules — *"use `##` for headers"*
 - Contradicting "ALWAYS" rules — pick one
 
 > These eat **attention budget** without earning it.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
----
+## Still too long? Split
 
-## Demo — Trim the CLAUDE.md
 
-<!-- .slide: data-background-color="#102b1a" -->
-<!-- .slide: style="font-size: 0.88em" -->
+<!-- .slide: style="font-size: 0.82em" -->
 
-1. Open `demo-app/CLAUDE.md`. It's about 340 lines of bloat.
+When a section earns its keep but is too long for the always-loaded root, push detail into topic files and leave a pointer.
+
+```text
+CLAUDE.md                       ← <50 lines, navigation only
+└─ docs/agent/
+   ├─ slides.md                 ← pipeline, gotchas
+   ├─ db.md                     ← schema, migration rules
+   └─ deploy.md                 ← release runbook
+```
+
+> Progressive disclosure: the root is **always in the window**. Topic files load **only when the agent needs them**.
+
+<small>📖 [skills.sh — agent-md-refactor](https://www.skills.sh/softaworks/agent-toolkit/agent-md-refactor)</small>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Trim the CLAUDE.md
+
+
+<!-- .slide: style="font-size: 0.85em" -->
+
+1. Open `demo-app/CLAUDE.md` (~340 lines).
 2. Ask Claude: *"What in here is load-bearing for this repo? What's noise?"*
-3. Run the filter on each line: would removing it cause an unrecoverable mistake?
-4. Cut. Target ≤80 lines. Commit.
-5. Verify in the same session: *"Add a new seed customer to `src/lib/server/db/seed.ts` and run the seed."*
+3. Run the filter on each line — would removing it cause an **unrecoverable** mistake?
+4. **Cut** the noise. Target ≤50 lines at root.
+5. **Split** anything that earns its keep but is long-form into `docs/agent/<topic>.md`, leave a one-line pointer in the root.
 
-The point of the exercise: less context produces better answers, not worse.
-
-<small>Keepers: how-to-run, schema overview, Svelte MCP guidance. Cuttable: team bios, multi-language code style, the 16 contradictory ALWAYS rules, the K8s release runbook, HR FAQ.</small>
-
----
-
-<!-- .slide: data-background-color="#1b263b" -->
+<!-- <small>Keepers: how-to-run, schema overview, Svelte MCP guidance. Cuttable: team bios, multi-language code style, the 16 contradictory ALWAYS rules, the K8s release runbook, HR FAQ. Splittable: schema overview → `docs/agent/db.md`, MCP guidance → a skill (Part 2).</small> -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Part 2
 
 ## Skills — using ones others made
 
 Borrow before you build. Most of what you need already exists.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## So... how do you add optional context without bloating the window?
 
-<!-- .slide: data-background-color="#0d1b2a" -->
+
 
 # Skills
 
 <!-- .element: class="fragment" -->
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What are skills?
 
 > **TL;DR** — glorified markdown files with a specific structure. The agent reads them and uses them like tools.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Anatomy of a skill
 
-<!-- .slide: style="font-size: 0.85em" -->
+
 
 ```text
 skill-name/
@@ -369,48 +468,50 @@ skill-name/
     ├── references/  docs loaded as needed
     └── assets/      templates, icons, fonts
 ```
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Example skill
 
-<img src="../assets/slides-screenshots/anthropic-skill-example.png" style="max-width: 80%; max-height: 420px; border-radius: 6px;">
+<img src="assets/slides-screenshots/anthropic-skill-example.png" alt="" style="width: 720px; object-fit: fill">
+
 
 <small>[anthropics/skills — internal-comms](https://github.com/anthropics/skills/tree/main/skills/internal-comms) — a real SKILL.md + folder. Tiny frontmatter, focused body.</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## How skills get into the context window
 
-At startup, the LLM only reads the description. Not the body, not the bundled resources. A few tokens per skill, regardless of how much the skill *could* load.
+> Agent reads only the description
 
-You only pay for the rest when the agent decides to use it.
+*You only pay for the rest when the agent decides to use it.*
 
-This is the opposite of stuffing CLAUDE.md.
-
----
+similar to including references to other files - just more standardised and you can invoke them **on demand.**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Progressive disclosure
 
-<!-- .slide: data-background-color="#0d1b2a" -->
 
-1. The agent knows what the skill does. That's all the description tells it.
+
+1. The agent knows what the skill does. 
 2. It decides when (or whether) to load the rest.
 3. The body loads dynamically. Only when it's actually relevant.
 
-That's the whole trick. Cheap to add, expensive only when used.
-
----
+That's the whole trick. **Cheap** to add, **expensive** only **when** **used**.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Cool things about skills
 
-- They reuse and share well. They're just markdown plus a folder.
-- Need a domain expert agent? Write one skill. Load it on demand.
-- Or grab one someone else already wrote.
+- Easily **readable by humans**, if you have long docs already they are a good candidates for it.
+- Easy to **share and reuse**.
+- Want to share some domain knowledge? Easy to write one
+- Plenty cool **community** based skills are available.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
----
-
-## Do skills actually move the needle?
+## How much difference can it make?
 
 A controlled evaluation:
 
@@ -420,21 +521,21 @@ A controlled evaluation:
 - Same 50-min wall timeout
 
 Goal: **isolate what each layer of context buys you.**
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Minor context for the task
 
 For printing on Formlabs printers, we use **Preform**, a desktop app to prepare the 3D model, orient it, etc...
 
 - It has a local HTTP API.
-- Our documentation is a long and bloated openapi doc, not bundled with the binary.
-
----
+- [The documentation](https://formlabs-dashboard-api-resources.s3.amazonaws.com/formlabs-local-api-latest.html) is a long openapi doc, not bundled with the binary. Not so LLM friendly
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.75em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The task (verbatim, across all variants)
 
-<!-- .slide: style="font-size: 0.75em" -->
+
 
 ```text
 Write a python script to: start the preform server api from
@@ -447,12 +548,12 @@ Verify that the script works with the tooling you have. Cap
 verification at 2 fix-and-retry iterations — if still broken,
 stop and report what you have.
 ```
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.8em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The four variants
 
-<!-- .slide: style="font-size: 0.8em" -->
+
 
 Each adds one layer on top of the previous.
 
@@ -462,25 +563,31 @@ Each adds one layer on top of the previous.
 | 2 | + `formlabs-local-api` | Skill describing the Preform local API |
 | 3 | + uv CLAUDE.md | Tells model to use `uv` |
 | 4 | + [agent-browser](https://skills.sh/brianlovin/claude-config/agent-browser) | Browser-validation skill + verify instruction |
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
----
+## Wait, what is agent-browser?
+
+> It's a CLI tool, designed for LLM agents to interact with browser.  
+
+The skill teaches AI how to use that CLI effectively.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.78em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Headline numbers
 
-<!-- .slide: style="font-size: 0.78em" -->
+
 
 | Variant | Wall | Turns | Bash | Outcome |
 |---|---:|---:|---:|---|
 | prompt-only | **3000s** ⏱ | 168 | **122** | timeout |
-| + formlabs skill | 645s | 39 | 17 | clean |
-| + uv CLAUDE.md | 597s | 28 | 10 | clean |
-| + agent-browser | 536s | 33 | 17 | clean + screenshots |
+| + formlabs skill | 645s | 39 | 17 | clean, but no models visible, only bounding boxes |
+| + uv CLAUDE.md | 597s | 28 | 10 | funnily enough,  not working |
+| + agent-browser | 536s | 33 | 17 | clean + screenshots (with minor issues) |
 
 > No skill → one skill: **~5× wall time**, **~7× fewer Bash calls**.
-
----
-
-<!-- .slide: data-background-color="#0d1b2a" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # 5×
 
@@ -491,8 +598,8 @@ Each adds one layer on top of the previous.
 ## fewer shell calls
 
 <small>One skill. Same model. Same task.</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What happened in V1 (no skill)?
 
@@ -503,10 +610,9 @@ Without API knowledge, "verify it works" became open-ended exploration:
 - looped `uv run script.py` to validate each guess
 - 168 turns, 122 Bash calls, hit the wall
 
-Note:
-The model *did* eventually finish — last message "Everything validates" — and narrated real discoveries (e.g. "body field is 'file', not 'file_path'; export-models doesn't exist in v3.58.1"). But the timeout killed JSON-emit. The 2-iteration verify cap didn't help — that cap only applies to fix-and-retry *after a failure*, not to API-discovery probing.
-
----
+<aside class="notes"><p>The model <em>did</em> eventually finish — last message &quot;Everything validates&quot; — and narrated real discoveries (e.g. &quot;body field is &#39;file&#39;, not &#39;file_path&#39;; export-models doesn&#39;t exist in v3.58.1&quot;). But the timeout killed JSON-emit. The 2-iteration verify cap didn&#39;t help — that cap only applies to fix-and-retry <em>after a failure</em>, not to API-discovery probing.</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## V1 → V2: what the skill did
 
@@ -514,136 +620,138 @@ The model *did* eventually finish — last message "Everything validates" — an
 - V2: **17** Bash calls → **7× less shell churn**
 
 The skill **collapses the discovery phase.** The model went straight to documented routes, wrote a clean script, verified, stopped.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
----
+## V3 - not a big win but..
 
-## V4: CLAUDE.md can steer to a skill
+> Agent spent a bit less time on figuring out how to run the python script (previously it was trying to use the system interpreter first)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-V4 adds a CLAUDE.md line: *"use `agent-browser` to open the result and confirm it renders."*
+## V4: Gave the agent a decent way to confirm the results
 
-The model picked up the steering:
+ *"use `agent-browser` to open the result and confirm it renders."*
 
-- invoked `agent-browser`
-- 9 CLI calls to drive the page
-- captured **3 screenshots** as evidence
+> Telling the agent how it should to do something helps it to skip the random trial-and-error approach on how it tries to verify it's work when instructed to.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-> A short CLAUDE.md instruction is enough to steer the model toward a skill it wouldn't otherwise auto-invoke.
+## And with proper feedback...
 
----
+The agent was able to fix most of the issues, yielded better result in less time and even created proof of it's work ( screenshots )
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.8em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Key takeaways from the eval
 
-<!-- .slide: style="font-size: 0.85em" -->
 
-A relevant skill is worth 5–7× wallclock when the task needs domain knowledge it doesn't have.
 
-CLAUDE.md actually steers the model toward a skill. V4 picked up the browser-validation line and acted on it without being asked twice.
+A relevant skill is worth 5–7× wallclock when the task needs specific knowledge it doesn't have.
 
-"Verify it works" is open-ended when the agent has no API knowledge. Cap tool calls, not retry iterations. The retry cap only fires after a failure, and discovery probing isn't failing.
+**CLAUDE.md** can steer the model toward a skill. 
 
----
+Giving the Agent a way to verify it works **improves outcome**.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Where to find skills
 
-<img src="../assets/slides-screenshots/skills-sh-home.png" style="max-width: 75%; max-height: 400px; border-radius: 6px;">
+<img src="assets/slides-screenshots/skills-sh-home.png" alt="" style="width: 680px; object-fit: fill">
+
 
 <small>[skills.sh](https://skills.sh/) · the open agent skills directory · `npx skills add <owner/repo>`</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Or the official plugin marketplace
 
-<img src="../assets/slides-screenshots/claude-plugins.png" style="max-width: 75%; max-height: 400px; border-radius: 6px;">
+<img src="assets/slides-screenshots/claude-plugins.png" alt="" style="width: 680px; object-fit: fill">
+
 
 <small>[claude.com/plugins](https://claude.com/plugins) — bundled tools, skills, and integrations, one click to install.</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.9em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Skills I personally use
 
 ( and not domain specific for my work )
-<!-- .slide: style="font-size: 0.9em" -->
+
 
 - [impeccable.style](https://impeccable.style/) — design iteration when I don't have a designer.
 - [grill-me](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md) — grills the plan out of me before I commit.
 - [caveman](https://github.com/juliusbrussee/caveman) — save tokens, save time.
 - [simplify](https://skills.sh/brianlovin/claude-config/simplify) — clean up clutter before wrapping work.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Good collections worth bookmarking
 
 - [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code)
 - [obra/superpowers](https://github.com/obra/superpowers)
 - [github/awesome-copilot — skills](https://github.com/github/awesome-copilot/tree/main/skills)
+- [mattpocock/skills](https://github.com/mattpocock/skills)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
----
+## Build your own collection.
 
-## But at the end
-
-<!-- .slide: data-background-color="#1a1a1a" -->
-
-You need to build your own library.
-
-No two projects are alike. The skills above are good. They aren't perfect for your repo, your stack, or the weird thing your team does.
-
-More skills isn't better either. Too many options gives the agent decision paralysis and burns tokens you didn't need to spend.
-
----
+- Because no two projects are alike. 
+- Not all devs share the same workflow
+- But keep in mind: sometimes **less is more**. Adding skills is **cheap**, but **not free**.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Kind of skills I usually build myself
 
-- Skills to handle a routine task ( example: sentry triage + ticket creation in JIRA + draft PR )
-- Skills that act like "an index" for the codebase behaviours,
-- Or explains domain-specific concepts.
-
----
+- Skills to handle a **routine task** ( example: sentry triage + ticket creation in JIRA + draft PR )
+- Skills that act like "**an index**" for the codebase behaviours,
+- Or explains **domain-specific** concepts, or act as a manual for something.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Demo — Borrow a skill
 
-<!-- .slide: data-background-color="#102b1a" -->
+
 <!-- .slide: style="font-size: 0.9em" -->
 
 Live walkthrough:
 
-1. Browse `skills.sh` and pick something useful in 30 seconds. `caveman`, `grill-me`, `simplify` all work.
+1. Browse `skills.sh` and pick something useful in 30 seconds. `caveman`, `grill-me`, `simplify`, `diagnose` all work.
 2. Install: `npx skills add <owner/repo>`.
 3. Confirm it landed: `/skills`.
-4. Trigger it on something real. *"caveman-recap what this demo-app does"* or *"simplify the last diff."*
+4. Trigger it on something real.
 
-No code written. A domain-specific capability, just dropped in.
-
----
-
-<!-- .slide: data-background-color="#000000" -->
+No code written. A new capability, just dropped in.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#232018" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # ☕
 
 ## Break — 10 min
 
 <small>Hard cut. Back at HH:MM.</small>
-
----
-
-<!-- .slide: data-background-color="#1b263b" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Part 3
 
 ## Skills — building your own
 
 Don't write them by hand. There's a skill for that.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Creating a skill — with Skill Creator
 
 How was the `formlabs-local-api` skill created? **Not by hand.**
 
-<img src="../assets/slides-screenshots/skill-creator.png" style="max-width: 75%; max-height: 360px; border-radius: 6px;">
+<img src="assets/slides-screenshots/skill-creator.png" alt="" style="width: 640px; object-fit: fill">
+
 
 <small>[skill-creator](https://skills.sh/anthropics/skills/skill-creator) — the meta-skill that builds skills. 195K installs.</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Iterating on the skill
 
@@ -656,60 +764,75 @@ Create skill  →  Verification task  →  Run with + without
 ```
 
 The trigger: capture **the second time** you explained something — not the first.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
----
+## Let's build a skill
 
-## Demo — Build `triage-order-tickets`
 
-<!-- .slide: data-background-color="#102b1a" -->
 <!-- .slide: style="font-size: 0.85em" -->
 
-Live walkthrough:
+First... add a skill for it:
+> npx skills add <https://github.com/anthropics/skills> --skill skill-creator
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-1. `/skill-creator` → name it `triage-order-tickets`.
-2. Write the frontmatter `description`. Specific enough that an order-triage prompt fires it. Narrow enough that unrelated prompts don't.
-3. Write the body as a procedure. What does a human support engineer do, step by step, from "I have a ticket" to "I've flagged a finding"? Stay generic about *how*.
-4. Test it on `workshop-context/triage/ticket-INC-4471.md`. Did it auto-load? Did the agent land on something defensible?
+## Then use it
 
-One hard rule: don't name MCP tools in the skill body. The skill describes a procedure. The MCP is a mechanism. Mixing the two makes the skill brittle when the tools change.
+> /skill-creator Please create a new skill in the current project to help triage incoming tickets in our system, assign them priorities (ignore, low, medium, superimportant), and result in a TLDR summary of the issue.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-The takeaway: a skill is a markdown file with a good description. The description is the API.
-
----
-
-<!-- .slide: data-background-color="#1b263b" -->
+<img src="assets/slides-screenshots/Pasted image 20260514102718.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Part 4
 
 ## MCP servers
 
 Skills told the agent how to think about something. MCP lets it actually do something.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Skills gave the agent *knowledge*. How does it take *action*?
 
-<!-- .slide: data-background-color="#0d1b2a" -->
+
+
+well...
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## It already has some tools
+
+- can use bash, use CLI
+- tools provided by the harness
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # MCP
 
 <!-- .element: class="fragment" -->
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What is MCP?
 
 Model Context Protocol. An open standard for exposing typed tools to AI agents.
 
-The agent doesn't reach into your system. It calls typed functions through a controlled interface, like an API the model speaks natively.
+> The agent doesn't reach into your system. It calls typed functions through a controlled interface, like an API the model speaks natively.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<small>Donated to the Linux Foundation in Dec 2025. Cross-tool standard.</small>
+## Example 
 
----
+> You want your LLM to be able to read production data, but you don't want to give it the credentials for the database.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Anatomy of an MCP server
 
-<!-- .slide: style="font-size: 0.85em" -->
+
 
 ```text
 mcp-server/   (any language — Python, TS, Go, Rust)
@@ -719,40 +842,45 @@ mcp-server/   (any language — Python, TS, Go, Rust)
 ```
 
 The agent sees a list of **typed function signatures**. Calls them like local functions. Every call is logged.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Example: the official MCP server registry
 
-<img src="../assets/slides-screenshots/mcp-servers-list.png" style="max-width: 80%; max-height: 420px; border-radius: 6px;">
+<img src="assets/slides-screenshots/mcp-servers-list.png" alt="" style="width: 720px; object-fit: fill">
+
 
 <small>[modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) — `filesystem`, `git`, `fetch`, `memory`, and dozens more. 85k stars.</small>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
----
+## But these days...
+
+Almost everything has their own MCP. It's easy to build.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.88em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## How MCP gets into the context window
 
-<!-- .slide: style="font-size: 0.88em" -->
 
-At startup, the agent sees every tool's schema. Name, description, input and output types, the lot.
 
-This is eager loading. Every byte costs context tokens before the agent has done a single thing.
+**At startup**, the agent sees every tool's schema. Name, description, input and output types, **the whole package**.
 
-Atlassian's MCP exposes 73 tools. That alone can eat 40–50% of your context before work begins.
+This **is eager loading**. Every byte costs context tokens before the agent has done a single thing.
+
+**Atlassian's MCP exposes 73 tools**. That alone can eat much of your context before work begins. ( especially with smaller models)
 
 > Skills are cheap. MCPs are not. Pick narrow.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Why your *own* MCP?
 
 Public MCPs expose someone else's surface. Almost always too broad for what you actually need.
 
-You wouldn't hand the agent prod credentials, and you shouldn't. Your own MCP exposes exactly the actions you want, scoped to your domain, with whatever guardrails you decide on.
-
-Two hours of building a small typed surface beats a quarter of devx tickets. Not even close.
-
----
+You wouldn't hand the agent prod credentials, and you shouldn't. Your own MCP exposes **exactly** the actions **you want**, scoped to **your domain**, with whatever **guardrails** you decide on.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## MCP vs CLI
 
@@ -764,12 +892,12 @@ Two hours of building a small typed surface beats a quarter of devx tickets. Not
 | Best for | Repeat, governed actions | One-offs, raw power |
 
 > Hybrid is the consensus. **Don't pick one.**
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.72em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Anatomy of a tiny MCP — `demo-triage`
 
-<!-- .slide: style="font-size: 0.72em" -->
+
 
 Two tools. Stdio transport. Reads `local.db` via Drizzle. Never writes to the DB.
 
@@ -778,19 +906,19 @@ Two tools. Stdio transport. Reads `local.db` via Drizzle. Never writes to the DB
 `flagOrderForReview(orderId, reason)` is the write tool. Appends a single JSON line to `workshop-context/triage/flags.jsonl`. Returns a confirmation.
 
 Notice that the write tool writes to a file, not a table. That's the point: a typed write surface should make it impossible for the agent to corrupt your data.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Demo — Wire up `demo-triage`
 
-<!-- .slide: data-background-color="#102b1a" -->
+
 <!-- .slide: style="font-size: 0.58em" -->
 
 Live walkthrough:
 
 1. Register from `demo-app/`:
 
-   ```
+   ```bash
    claude mcp add demo-triage -- \
      bun run --cwd $(pwd) workshop-context/mcp/server.ts
    ```
@@ -801,80 +929,67 @@ Live walkthrough:
 5. `cat workshop-context/triage/flags.jsonl`. Show the JSON line that just landed.
 
 That's MCP doing what a skill or a CLI couldn't safely do on its own. Typed actions, with the surface you chose.
-
----
-
-<!-- .slide: data-background-color="#1b263b" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Part 5
 
 ## Capstone
 
 All the pieces, composed into a real on-call assistant.
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What manual triage looks like
 
-<img src="../assets/slides-screenshots/order-alice-002.png" style="max-width: 85%; max-height: 460px; border-radius: 6px;">
+<img src="assets/slides-screenshots/order-alice-002.png" alt="" style="width: 780px; object-fit: fill">
+
 
 <small>Order `ord-alice-002` — `orders.ship_address` (Boston) ≠ `shipments.ship_address` (Springfield). Both rows say *delivered*. Naive lookup sees "delivered" and moves on.</small>
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Demo — Capstone (triage INC-4471)
 
-<!-- .slide: data-background-color="#102b1a" -->
+
 <!-- .slide: style="font-size: 0.6em" -->
 
-One composed flow. No code change, all data triage.
-
-1. Read the ticket: `workshop-context/triage/ticket-INC-4471.md`. Alice. Frustrated email. No order ID, just an address.
-2. The `triage-order-tickets` skill auto-loads from the prompt.
-3. Claude calls the MCP: `lookupCustomerOrders("alice")`. Two orders come back with line items and shipments.
-4. Now reason on the data. Both orders say `delivered`. But on `ord-alice-002`, `orders.ship_address` and `shipments.ship_address` don't match.
-5. Flag it: `flagOrderForReview("ord-alice-002", "address mismatch …")`.
-6. Verify: `cat workshop-context/triage/flags.jsonl`. Specific, evidence-backed, actionable by a human.
-
-Each piece on its own is a toy. Composed, it's an on-call assistant.
-
----
+> Extend the existing triage skill to not only classify, but try to find root cause of problem and flag the ticket using the new MCP.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Recap
 
-<!-- .slide: data-background-color="#0d1b2a" -->
+
 <!-- .slide: style="font-size: 0.9em" -->
 
 - Context is finite. Mind what you put in. <!-- .element: class="fragment" -->
 - CLAUDE.md is lean onboarding, not a brain dump. <!-- .element: class="fragment" -->
 - Skills load progressively. Cheap to add, expensive only when used. <!-- .element: class="fragment" -->
-- A relevant skill runs 5–7× faster than no skill. <!-- .element: class="fragment" -->
+- A relevant skill make you go faster than no skill. <!-- .element: class="fragment" -->
 - MCP gives the agent typed actions through a surface you control. <!-- .element: class="fragment" -->
 - Build, don't just consume. <!-- .element: class="fragment" -->
-
----
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Questions?
 
 <small>Slides + sandbox repo are committed. Borrow them.</small>
-
-Note:
-Bank early questions for here. End on time — workshops that end on time get repeat invitations.
-
-          </textarea>
-        </section>
-      </div>
+</div></script></section></div>
     </div>
 
-    <script src="./dist/reveal.js"></script>
+    <script src="dist/reveal.js"></script>
 
-    <script src="./mermaid/dist/mermaid.min.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
 
-    <script src="./plugin/markdown/markdown.js"></script>
-    <script src="./plugin/highlight/highlight.js"></script>
-    <script src="./plugin/zoom/zoom.js"></script>
-    <script src="./plugin/notes/notes.js"></script>
-    <script src="./plugin/math/math.js"></script>
     <script>
       function extend() {
         var target = {};
@@ -889,6 +1004,30 @@ Bank early questions for here. End on time — workshops that end on time get re
         return target;
       }
 
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
       // default options to init reveal.js
       var defaultOptions = {
         controls: true,
@@ -896,45 +1035,51 @@ Bank early questions for here. End on time — workshops that end on time get re
         history: true,
         center: true,
         transition: 'default', // none/fade/slide/convex/concave/zoom
-        slideNumber: true,
-        highlight: {
-          highlightOnLoad: false
-        },
         plugins: [
           RevealMarkdown,
           RevealHighlight,
           RevealZoom,
           RevealNotes,
-          RevealMath
-        ]
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
       };
 
       // options from URL query string
       var queryOptions = Reveal().getQueryHash() || {};
 
-      var options = extend(defaultOptions, {"_":["slides/workshop.md"],"static":"/Users/daniel.racz/repos/kraft-ws/build/slides/workshop","static-dirs":"assets","staticDirs":"assets","theme":"black","highlight-theme":"atom-one-dark","highlightTheme":"atom-one-dark","title":"Your AI Workflow Sucks?","disable-auto-open":true,"disableAutoOpen":true}, queryOptions);
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":"c/t","transition":"slide","transitionSpeed":"default"}, queryOptions);
     </script>
-
 
     <script>
       Reveal.initialize(options);
-      Reveal.addEventListener('ready', function (event) {
-        const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
-        const hlp = Reveal.getPlugin('highlight');
-        blocks.forEach(hlp.highlightBlock);
-      });
-    </script>
-
-    <script>
-      const mermaidOptions = extend({ startOnLoad: false }, {});
-      mermaid.startOnLoad = false;
-      mermaid.initialize(mermaidOptions);
-      const cb = function (event) {
-        mermaid.init(mermaidOptions, '.stack.present > .present pre code.mermaid');
-        mermaid.init(mermaidOptions, '.slides > .present:not(.stack) pre code.mermaid');
-      }
-      Reveal.addEventListener('ready', cb);
-      Reveal.addEventListener('slidetransitionend', cb);
     </script>
   </body>
+
+  <!-- created with Advanced Slides -->
 </html>
