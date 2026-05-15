@@ -111,17 +111,15 @@
 
 ## It's a Skill Issue
 
-A hands-on workshop on agentic coding workflows.
-
-<aside class="notes"><p>Welcome the room. Energy first, content second. ~30 seconds. Then move.</p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+A hands-on workshop on setting up your agent for sucess.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## About me
 
 - Software dev. Embedded → cloud over the last 6 years.
 - Full-stack now. Soft spot for backend & infra. Mediocre at frontend.
-- Used Copilot since it was a fancy autocomplete.
+- Used Copilot since it was a fancy autocomplete. Always kept AI on my radar from the start.
 - I rarely write code directly anymore — agents do the heavy lifting.
 
 <aside class="notes"><p>Premise of the day: be a good foreman. Direct the agent without repeating yourself.</p>
@@ -155,14 +153,14 @@ A hands-on workshop on agentic coding workflows.
 
 
 
-| Part | Topic | Demo |
-|---|---|---|
-| 1 | Context — what goes in the window | CLAUDE.md trim & split |
-| 2 | Skills — using ones others made | Install + use a skill |
-| ☕ | Break |  |
-| 3 | Skills — building your own | `skill-creator` |
-| 4 | MCP servers | Register + call a tool |
-| 5 | Capstone | Compose all of the above |
+| Part | Topic                             | Demo                     |
+| ---- | --------------------------------- | ------------------------ |
+| 1    | Context — what goes in the window |                          |
+| 2    | Skills — using ones others made   | Install + use a skill    |
+| ☕    | Break                             |                          |
+| 3    | Skills — building your own        | `skill-creator`          |
+| 4    | MCP servers                       | Register + call a tool   |
+| 5    | Capstone                          | Compose all of the above |
 
 <small>Demos are the spine. If we're behind, talk-time gets cut first.</small>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#232018" -->
@@ -198,6 +196,8 @@ Grab commands from here:
 - `CLAUDE.md` — deliberately bloated (~340 lines). We trim it in Part 1.
 - `workshop-context/triage/` — sample tickets. Used in Parts 3 and 5.
 - `workshop-context/mcp/` — the MCP server we wire up in Part 4.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 <img src="assets/slides-screenshots/demo-app-screenshot.png" alt="" style="width: 800px; object-fit: fill">
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
@@ -205,11 +205,11 @@ Grab commands from here:
 
 # Part 1
 
-## Context
+## Let's talk about
 
-> Why does the agent say it can't find the file you literally just edited?
+> Context
 
-*This part answers that.*
+When your agent is being dumb dumb, it's a context problem. Not a model problem.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -251,14 +251,8 @@ They predict the next token, one at a time.
 
 ## What happens every turn?
 
-```text
-1. Harness builds context:
-     system prompt + AGENTS.md + conversation history
-2. Sends to model
-3. Model returns next token
-4. Token appended to context
-5. Loop until model signals done
-```
+<img src="assets/slides-screenshots/turn-loop.svg" alt="" style="width: 780px; object-fit: fill">
+
 
 That's why you see streaming — one token at a time.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -287,8 +281,6 @@ Three things it can't easily figure out on its own:
 - The map: what the stack is, where things live.
 - The purpose: why this project exists, what each part is for.
 - The local rules, where to look for custom tools, how to run tests, etc...
-
-<small>Don't dump every command in. You'll get worse answers, not better.</small>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.82em" class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -298,13 +290,13 @@ Three things it can't easily figure out on its own:
 
 The window has a limit. The token bill isn't the real cost though.
 
-The real cost is *context rot*: recall degrades as tokens grow. Every frontier model showed this behaviour. <small>[(Chroma, 2025)](https://research.trychroma.com/context-rot)</small>
+The real cost is *context rot*: recall degrades as tokens grow. <small>[(Chroma, 2025)](https://research.trychroma.com/context-rot)</small>
 
 - Info buried mid-prompt: ~30% accuracy drop. The model literally forgets the middle.
-- Every token competes for attention. More tokens, thinner signal.
+- Every token competes for attention. More tokens => thinner signal.
 - Similar-but-wrong content actively misleads. Worse than no context.
 
-> Every token spends from an [attention budget](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents). The cost isn't the API bill. It's accuracy.
+> Every token spends from an [attention budget](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents). The cost isn't the API bill alone.
 
 <aside class="notes"><p>Chroma tested 18 frontier models (Claude Opus 4, GPT-4.1, Gemini 2.5). All showed degradation at every length increment. This is an architectural property of attention, not a training gap.</p>
 </div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -324,17 +316,13 @@ The real cost is *context rot*: recall degrades as tokens grow. Every frontier m
 
 <!-- .slide: style="font-size: 0.9em" -->
 
-When the window fills up (or just *feels* full), the model starts to panic. You can see it:
+When the window fills up (or just *feels* full), the model starts to panic:
 
-- It summarizes prematurely.
-- It dumps thoughts to disk. `SUMMARY.md`, `CHANGELOG.md`, mid-task, unprompted.
-- It closes with "I think I have enough" when it clearly doesn't.
-- It stops asking the obvious follow-up.
+<img src="assets/slides-screenshots/context-anxiety-bar.svg" alt="" style="width: 780px; object-fit: fill">
+
 
 > Avoid triggering this. A lean context produces a sharper agent.
-
-<aside class="notes"><p>Observed clearly in Sonnet 4.5+: the model senses pressure and switches strategy. You can use this as a <em>signal</em> (orchestrators can listen for it) — but in normal coding work, you avoid triggering it by keeping context lean.</p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The CLAUDE.md goldilocks problem
@@ -427,14 +415,16 @@ CLAUDE.md                       ← <50 lines, navigation only
 5. **Split** anything that earns its keep but is long-form into `docs/agent/<topic>.md`, leave a one-line pointer in the root.
 
 <!-- <small>Keepers: how-to-run, schema overview, Svelte MCP guidance. Cuttable: team bios, multi-language code style, the 16 contradictory ALWAYS rules, the K8s release runbook, HR FAQ. Splittable: schema overview → `docs/agent/db.md`, MCP guidance → a skill (Part 2).</small> -->
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-# Part 2
+## Good practices to keep your context lean
 
-## Skills — using ones others made
-
-Borrow before you build. Most of what you need already exists.
+- Do not reuse sessions. Use **/clear** frequently.
+- When doing a long session, use subagents to token-consuming work like
+  - Research things
+  - ...
+  - Fixing a test
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -442,7 +432,7 @@ Borrow before you build. Most of what you need already exists.
 
 
 
-# Skills
+# Part 2:  Skills
 
 <!-- .element: class="fragment" -->
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -482,11 +472,10 @@ skill-name/
 
 ## How skills get into the context window
 
-> Agent reads only the description
+<img src="assets/slides-screenshots/skills-disclosure.svg" alt="" style="width: 780px; object-fit: fill">
 
-*You only pay for the rest when the agent decides to use it.*
 
-similar to including references to other files - just more standardised and you can invoke them **on demand.**
+*Cheap to add. Expensive only when used.*
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -494,7 +483,7 @@ similar to including references to other files - just more standardised and you 
 
 
 
-1. The agent knows what the skill does. 
+1. The agent knows what the skill does.
 2. It decides when (or whether) to load the rest.
 3. The body loads dynamically. Only when it's actually relevant.
 
@@ -568,7 +557,7 @@ Each adds one layer on top of the previous.
 
 ## Wait, what is agent-browser?
 
-> It's a CLI tool, designed for LLM agents to interact with browser.  
+> It's a CLI tool, designed for LLM agents to interact with browser.
 
 The skill teaches AI how to use that CLI effectively.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.78em" class="drop" -->
@@ -623,7 +612,7 @@ The skill **collapses the discovery phase.** The model went straight to document
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## V3 - not a big win but..
+## V3 - not a big win but
 
 > Agent spent a bit less time on figuring out how to run the python script (previously it was trying to use the system interpreter first)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -637,7 +626,7 @@ The skill **collapses the discovery phase.** The model went straight to document
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## And with proper feedback...
+## And with proper feedback
 
 The agent was able to fix most of the issues, yielded better result in less time and even created proof of it's work ( screenshots )
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.8em" class="drop" -->
@@ -647,9 +636,9 @@ The agent was able to fix most of the issues, yielded better result in less time
 
 
 
-A relevant skill is worth 5–7× wallclock when the task needs specific knowledge it doesn't have.
+A relevant skill is game changer when the task needs specific knowledge it doesn't have.
 
-**CLAUDE.md** can steer the model toward a skill. 
+**CLAUDE.md** can steer the model toward a skill.
 
 Giving the Agent a way to verify it works **improves outcome**.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -694,9 +683,9 @@ Giving the Agent a way to verify it works **improves outcome**.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Build your own collection.
+## Build your own collection
 
-- Because no two projects are alike. 
+- Because no two projects are alike.
 - Not all devs share the same workflow
 - But keep in mind: sometimes **less is more**. Adding skills is **cheap**, but **not free**.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -757,13 +746,7 @@ How was the `formlabs-local-api` skill created? **Not by hand.**
 
 Skill Creator has a built-in feedback loop:
 
-```text
-Create skill  →  Verification task  →  Run with + without
-                                              ↓
-                              Compare → improve → repeat
-```
-
-The trigger: capture **the second time** you explained something — not the first.
+<img src="assets/slides-screenshots/skill-loop.svg" alt="" style="width: 780px; object-fit: fill">
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#0a3d2c" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -824,7 +807,13 @@ Model Context Protocol. An open standard for exposing typed tools to AI agents.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Example 
+## MCP — how it connects
+
+<img src="assets/slides-screenshots/mcp-architecture.svg" alt="" style="width: 780px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Example
 
 > You want your LLM to be able to read production data, but you don't want to give it the credentials for the database.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
@@ -854,7 +843,7 @@ The agent sees a list of **typed function signatures**. Calls them like local fu
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## But these days...
+## But these days
 
 Almost everything has their own MCP. It's easy to build.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.88em" class="drop" -->
@@ -926,9 +915,9 @@ Live walkthrough:
 2. `/mcp`. Confirm `lookupCustomerOrders` and `flagOrderForReview` showed up.
 3. Ask Claude: *"Use the demo-triage MCP to look up `bob.patel@example.com`. Anything off?"* Bob's `ord-bob-001` says order `cancelled`, shipment `in_transit`. That's the thing to spot.
 4. Have Claude call `flagOrderForReview` with a one-line reason.
-5. `cat workshop-context/triage/flags.jsonl`. Show the JSON line that just landed.
+5. `cat workshop-context/triage/flags.jsonl`. 
 
-That's MCP doing what a skill or a CLI couldn't safely do on its own. Typed actions, with the surface you chose.
+> That's MCP doing what a skill or a CLI couldn't safely do on its own.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -936,7 +925,7 @@ That's MCP doing what a skill or a CLI couldn't safely do on its own. Typed acti
 
 ## Capstone
 
-All the pieces, composed into a real on-call assistant.
+All the pieces, composed into an on-call assistant.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -955,6 +944,14 @@ All the pieces, composed into a real on-call assistant.
 <!-- .slide: style="font-size: 0.6em" -->
 
 > Extend the existing triage skill to not only classify, but try to find root cause of problem and flag the ticket using the new MCP.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## The three layers
+
+
+
+<img src="assets/slides-screenshots/three-layers.svg" alt="" style="width: 780px; object-fit: fill">
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 

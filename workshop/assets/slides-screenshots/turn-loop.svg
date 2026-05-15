@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 130" width="780" height="130">
+  <style>
+    .box { fill: rgba(7,98,200,0.18); stroke: #0762C8; stroke-width: 1.5; }
+    .label { font-family: system-ui,-apple-system,sans-serif; font-size: 13px; font-weight: 600; fill: #FEFDF9; }
+    .sub { font-family: system-ui,-apple-system,sans-serif; font-size: 10px; fill: #5db5ff; }
+    .loop-label { font-family: system-ui,-apple-system,sans-serif; font-size: 11px; fill: #5db5ff; }
+  </style>
+
+  <!-- Box 1: Build context -->
+  <rect x="45" y="12" width="165" height="58" rx="8" class="box"/>
+  <text x="127" y="37" text-anchor="middle" class="label">Build context</text>
+  <text x="127" y="51" text-anchor="middle" class="sub">system + CLAUDE.md</text>
+  <text x="127" y="63" text-anchor="middle" class="sub">+ history</text>
+
+  <!-- Arrow 1 -->
+  <line x1="212" y1="41" x2="246" y2="41" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="246,36 256,41 246,46" fill="#5db5ff"/>
+
+  <!-- Box 2: Send to model -->
+  <rect x="258" y="12" width="120" height="58" rx="8" class="box"/>
+  <text x="318" y="38" text-anchor="middle" class="label">Send to</text>
+  <text x="318" y="55" text-anchor="middle" class="label">model</text>
+
+  <!-- Arrow 2 -->
+  <line x1="380" y1="41" x2="414" y2="41" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="414,36 424,41 414,46" fill="#5db5ff"/>
+
+  <!-- Box 3: Next token -->
+  <rect x="426" y="12" width="120" height="58" rx="8" class="box"/>
+  <text x="486" y="38" text-anchor="middle" class="label">Next</text>
+  <text x="486" y="55" text-anchor="middle" class="label">token</text>
+
+  <!-- Arrow 3 -->
+  <line x1="548" y1="41" x2="582" y2="41" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="582,36 592,41 582,46" fill="#5db5ff"/>
+
+  <!-- Box 4: Append to context -->
+  <rect x="594" y="12" width="141" height="58" rx="8" class="box"/>
+  <text x="664" y="38" text-anchor="middle" class="label">Append to</text>
+  <text x="664" y="55" text-anchor="middle" class="label">context</text>
+
+  <!-- Return dashed path -->
+  <line x1="735" y1="70" x2="735" y2="108" stroke="#5db5ff" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="735" y1="108" x2="45" y2="108" stroke="#5db5ff" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="45" y1="108" x2="45" y2="75" stroke="#5db5ff" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="39,75 45,65 51,75" fill="#5db5ff"/>
+
+  <text x="390" y="124" text-anchor="middle" class="loop-label">↩ repeat until done signal</text>
+</svg>
