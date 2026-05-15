@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 195" width="780" height="195">
+  <style>
+    .box-blue { fill: rgba(7,98,200,0.18); stroke: #0762C8; stroke-width: 1.5; }
+    .box-orange { fill: rgba(255,90,0,0.12); stroke: #FF5A00; stroke-width: 1.5; }
+    .box-dim { fill: rgba(7,98,200,0.12); stroke: #0762C8; stroke-width: 1; }
+    .heading { font-family: system-ui,-apple-system,sans-serif; font-size: 14px; font-weight: 700; fill: #FEFDF9; }
+    .sub { font-family: system-ui,-apple-system,sans-serif; font-size: 11px; fill: rgba(254,253,249,0.6); }
+    .arr-label { font-family: system-ui,-apple-system,sans-serif; font-size: 10px; fill: #5db5ff; }
+    .emoji { font-size: 22px; }
+  </style>
+
+  <!-- AGENT box -->
+  <rect x="30" y="65" width="145" height="70" rx="8" class="box-blue"/>
+  <text x="102" y="96" text-anchor="middle" class="emoji" fill="#FEFDF9">🤖</text>
+  <text x="102" y="118" text-anchor="middle" class="heading">Agent</text>
+
+  <!-- Arrows: agent ↔ MCP -->
+  <line x1="178" y1="90" x2="278" y2="90" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="278,85 288,90 278,95" fill="#5db5ff"/>
+  <text x="228" y="85" text-anchor="middle" class="arr-label">typed calls →</text>
+
+  <line x1="288" y1="112" x2="178" y2="112" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="178,107 168,112 178,117" fill="#5db5ff"/>
+  <text x="228" y="128" text-anchor="middle" class="arr-label">← structured results</text>
+
+  <!-- MCP SERVER box -->
+  <rect x="290" y="40" width="200" height="120" rx="8" class="box-orange"/>
+  <text x="390" y="80" text-anchor="middle" class="heading">MCP Server</text>
+  <line x1="310" y1="88" x2="470" y2="88" stroke="rgba(255,90,0,0.3)" stroke-width="1"/>
+  <text x="390" y="105" text-anchor="middle" class="sub">tools</text>
+  <text x="390" y="122" text-anchor="middle" class="sub">resources</text>
+  <text x="390" y="139" text-anchor="middle" class="sub">prompts</text>
+
+  <!-- Arrows: MCP ↔ backends -->
+  <line x1="492" y1="90" x2="552" y2="75" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="552,70 562,74 554,81" fill="#5db5ff"/>
+
+  <line x1="492" y1="100" x2="552" y2="100" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="552,95 562,100 552,105" fill="#5db5ff"/>
+
+  <line x1="492" y1="110" x2="552" y2="125" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="552,119 562,126 554,132" fill="#5db5ff"/>
+
+  <!-- Return arrows -->
+  <line x1="554" y1="74" x2="494" y2="90" stroke="rgba(93,181,255,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="554" y1="100" x2="494" y2="100" stroke="rgba(93,181,255,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="554" y1="126" x2="494" y2="110" stroke="rgba(93,181,255,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Backend boxes -->
+  <rect x="560" y="30" width="160" height="42" rx="8" class="box-dim"/>
+  <text x="640" y="55" text-anchor="middle" class="heading">Database</text>
+
+  <rect x="560" y="82" width="160" height="42" rx="8" class="box-dim"/>
+  <text x="640" y="107" text-anchor="middle" class="heading">External API</text>
+
+  <rect x="560" y="134" width="160" height="42" rx="8" class="box-dim"/>
+  <text x="640" y="159" text-anchor="middle" class="heading">File system</text>
+
+  <!-- Bottom note -->
+  <text x="390" y="186" text-anchor="middle" style="font-family:system-ui,sans-serif;font-size:10px;fill:rgba(93,181,255,0.6);font-style:italic;">agent never touches backends directly — every action passes through the typed surface you define</text>
+</svg>

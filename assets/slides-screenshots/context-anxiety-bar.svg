@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 115" width="780" height="115">
+  <defs>
+    <linearGradient id="bar-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0762C8"/>
+      <stop offset="60%" stop-color="#0762C8"/>
+      <stop offset="100%" stop-color="#FF5A00"/>
+    </linearGradient>
+  </defs>
+  <style>
+    .ann { font-family: system-ui,-apple-system,sans-serif; font-size: 11px; fill: #FF5A00; }
+    .full-label { font-family: system-ui,-apple-system,sans-serif; font-size: 11px; font-weight: 700; fill: #FEFDF9; }
+    .pct { font-family: system-ui,-apple-system,sans-serif; font-size: 10px; fill: rgba(254,253,249,0.4); }
+  </style>
+
+  <!-- Bar track -->
+  <rect x="20" y="30" width="740" height="28" rx="6" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+  <!-- Filled portion (88%) -->
+  <rect x="20" y="30" width="651" height="28" rx="6" fill="url(#bar-grad)"/>
+
+  <!-- "FULL" label inside bar at right -->
+  <text x="745" y="49" text-anchor="end" class="full-label">FULL</text>
+
+  <!-- Threshold tick at ~70% -->
+  <line x1="538" y1="26" x2="538" y2="62" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="538" y="22" text-anchor="middle" class="pct">comfortable</text>
+
+  <!-- Overflow zone label -->
+  <text x="610" y="22" text-anchor="middle" style="font-family:system-ui,sans-serif;font-size:10px;fill:#FF5A00;font-style:italic">overflow zone</text>
+
+  <!-- Annotation 1: summarizes prematurely -->
+  <line x1="560" y1="62" x2="530" y2="85" stroke="#FF5A00" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="460" y="98" text-anchor="middle" class="ann">summarizes prematurely</text>
+
+  <!-- Annotation 2: dumps to disk -->
+  <line x1="620" y1="62" x2="650" y2="85" stroke="#FF5A00" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="650" y="98" text-anchor="middle" class="ann">dumps to disk unprompted</text>
+
+  <!-- Annotation 3: stops follow-ups — shown as overflowing the bar -->
+  <rect x="671" y="30" width="89" height="28" rx="0" fill="rgba(255,90,0,0.15)" stroke="#FF5A00" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="715" y="49" text-anchor="middle" style="font-family:system-ui,sans-serif;font-size:10px;fill:#FF5A00">stops follow-ups</text>
+</svg>

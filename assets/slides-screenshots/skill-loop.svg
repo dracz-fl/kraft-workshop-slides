@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 130" width="780" height="130">
+  <style>
+    .box { fill: rgba(7,98,200,0.18); stroke: #0762C8; stroke-width: 1.5; }
+    .box-green { fill: rgba(10,61,44,0.45); stroke: #2a8a5a; stroke-width: 1.5; }
+    .label { font-family: system-ui,-apple-system,sans-serif; font-size: 13px; font-weight: 600; fill: #FEFDF9; }
+    .loop-label { font-family: system-ui,-apple-system,sans-serif; font-size: 11px; fill: #5db5ff; }
+    .trigger { font-family: system-ui,-apple-system,sans-serif; font-size: 10px; fill: rgba(93,181,255,0.7); font-style: italic; }
+  </style>
+
+  <!-- Box 1: Create skill -->
+  <rect x="30" y="12" width="130" height="56" rx="8" class="box"/>
+  <text x="95" y="38" text-anchor="middle" class="label">Create</text>
+  <text x="95" y="55" text-anchor="middle" class="label">skill</text>
+
+  <!-- Arrow 1 -->
+  <line x1="162" y1="40" x2="194" y2="40" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="194,35 204,40 194,45" fill="#5db5ff"/>
+
+  <!-- Box 2: Verification task -->
+  <rect x="206" y="12" width="145" height="56" rx="8" class="box"/>
+  <text x="278" y="38" text-anchor="middle" class="label">Verification</text>
+  <text x="278" y="55" text-anchor="middle" class="label">task</text>
+
+  <!-- Arrow 2 -->
+  <line x1="353" y1="40" x2="385" y2="40" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="385,35 395,40 385,45" fill="#5db5ff"/>
+
+  <!-- Box 3: Run with + without -->
+  <rect x="397" y="12" width="145" height="56" rx="8" class="box"/>
+  <text x="469" y="38" text-anchor="middle" class="label">Run with</text>
+  <text x="469" y="55" text-anchor="middle" class="label">+ without</text>
+
+  <!-- Arrow 3 -->
+  <line x1="544" y1="40" x2="576" y2="40" stroke="#5db5ff" stroke-width="1.5"/>
+  <polygon points="576,35 586,40 576,45" fill="#5db5ff"/>
+
+  <!-- Box 4: Compare + improve (green) -->
+  <rect x="588" y="12" width="155" height="56" rx="8" class="box-green"/>
+  <text x="665" y="38" text-anchor="middle" class="label">Compare</text>
+  <text x="665" y="55" text-anchor="middle" class="label">+ improve</text>
+
+  <!-- Return dashed path -->
+  <line x1="743" y1="68" x2="743" y2="108" stroke="#5db5ff" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="743" y1="108" x2="30" y2="108" stroke="#5db5ff" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="30" y1="108" x2="30" y2="72" stroke="#5db5ff" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="24,72 30,62 36,72" fill="#5db5ff"/>
+
+  <text x="390" y="124" text-anchor="middle" class="loop-label">↩ repeat</text>
+
+  <!-- Trigger hint -->
+  <text x="390" y="8" text-anchor="middle" class="trigger">trigger: capture the second time you explain something — not the first</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 205" width="780" height="205">
+  <style>
+    .band-title { font-family: system-ui,-apple-system,sans-serif; font-size: 15px; font-weight: 700; fill: #FEFDF9; }
+    .band-sub { font-family: system-ui,-apple-system,sans-serif; font-size: 11px; fill: rgba(254,253,249,0.65); }
+    .badge { font-family: system-ui,-apple-system,sans-serif; font-size: 10px; font-weight: 600; }
+    .arrow { font-family: system-ui,-apple-system,sans-serif; font-size: 16px; fill: rgba(254,253,249,0.25); }
+  </style>
+
+  <!-- Band 1: CLAUDE.md (blue) -->
+  <rect x="30" y="10" width="720" height="54" rx="10" fill="rgba(7,98,200,0.28)" stroke="#0762C8" stroke-width="1.5"/>
+  <!-- Badge -->
+  <rect x="48" y="24" width="78" height="22" rx="4" fill="rgba(93,181,255,0.2)" stroke="#5db5ff" stroke-width="1"/>
+  <text x="87" y="39" text-anchor="middle" class="badge" fill="#5db5ff">always loaded</text>
+  <!-- Text -->
+  <text x="155" y="35" class="band-title">CLAUDE.md</text>
+  <text x="155" y="52" class="band-sub">lean onboarding · invariants · pointers to docs</text>
+
+  <!-- Arrow down -->
+  <text x="390" y="76" text-anchor="middle" class="arrow">↓</text>
+
+  <!-- Band 2: Skills (green) -->
+  <rect x="30" y="82" width="720" height="54" rx="10" fill="rgba(10,61,44,0.45)" stroke="#2a8a5a" stroke-width="1.5"/>
+  <!-- Badge -->
+  <rect x="48" y="96" width="82" height="22" rx="4" fill="rgba(42,138,90,0.25)" stroke="#2a8a5a" stroke-width="1"/>
+  <text x="89" y="111" text-anchor="middle" class="badge" fill="#4ade80">lazy loaded</text>
+  <!-- Text -->
+  <text x="158" y="107" class="band-title">Skills</text>
+  <text x="158" y="124" class="band-sub">description always in · body loaded only when agent invokes · cheap to add</text>
+
+  <!-- Arrow down -->
+  <text x="390" y="148" text-anchor="middle" class="arrow">↓</text>
+
+  <!-- Band 3: MCP (orange) -->
+  <rect x="30" y="154" width="720" height="54" rx="10" fill="rgba(255,90,0,0.14)" stroke="#FF5A00" stroke-width="1.5"/>
+  <!-- Badge -->
+  <rect x="48" y="168" width="90" height="22" rx="4" fill="rgba(255,90,0,0.2)" stroke="#FF5A00" stroke-width="1"/>
+  <text x="93" y="183" text-anchor="middle" class="badge" fill="#FF5A00">eager + typed</text>
+  <!-- Text -->
+  <text x="166" y="179" class="band-title">MCP</text>
+  <text x="166" y="196" class="band-sub">all schemas upfront · real actions through a controlled surface · pick narrow</text>
+</svg>
