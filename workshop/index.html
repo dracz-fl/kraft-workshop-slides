@@ -279,8 +279,10 @@ At session start, the LLM knows nothing about your codebase.
 Three things it can't easily figure out on its own:
 
 - The map: what the stack is, where things live.
-- The purpose: why this project exists, what each part is for.
+- **The domain:** the vocabulary, entities, and business rules — *the stuff only your team knows.*
 - The local rules, where to look for custom tools, how to run tests, etc...
+
+<small>Code, git history, and docs are all readable. The agent can find those. The domain model rarely lives in any single file.</small>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.82em" class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -355,6 +357,7 @@ Unrecoverable means keep. That's a guardrail. Slower means cut. Let the agent fi
 <!-- .slide: style="font-size: 0.78em" -->
 
 - Architecture invariants — "all writes go through `EventBus`"
+- Domain rules — "orders can only be cancelled before shipment; refunds create a new ledger entry, never mutate"
 - Secret handling — "never commit `.env`; use `sops`"
 - Migration policy — "run `bun db:migrate` before `bun dev`"
 - Where to verify — "`bun typecheck && bun test` before declaring done"
@@ -415,16 +418,6 @@ CLAUDE.md                       ← <50 lines, navigation only
 5. **Split** anything that earns its keep but is long-form into `docs/agent/<topic>.md`, leave a one-line pointer in the root.
 
 <!-- <small>Keepers: how-to-run, schema overview, Svelte MCP guidance. Cuttable: team bios, multi-language code style, the 16 contradictory ALWAYS rules, the K8s release runbook, HR FAQ. Splittable: schema overview → `docs/agent/db.md`, MCP guidance → a skill (Part 2).</small> -->
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-## Good practices to keep your context lean
-
-- Do not reuse sessions. Use **/clear** frequently.
-- When doing a long session, use subagents to token-consuming work like
-  - Research things
-  - ...
-  - Fixing a test
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -788,8 +781,38 @@ well...
 
 ## It already has some tools
 
-- can use bash, use CLI
-- tools provided by the harness
+- Bash, file read/write, web fetch
+- **Subagents** — spawn a child agent with its own clean context
+- Whatever else the harness provides
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Subagents — the agent's escape hatch
+
+
+
+Remember context rot? Subagents are how the agent fights back **mid-session**.
+
+Spawn a child for token-heavy work. The child has its own window; the parent only sees the distilled result.
+
+Good candidates:
+
+- Researching an unfamiliar API or library
+- Reading and summarising long logs
+- Fixing a broken test in isolation
+- Any "explore and report back" task
+
+> Thousands of tokens of exploration stay in the child's window, not yours.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## But all of this stays inside the sandbox
+
+Bash, file tools, subagents — powerful, but they only touch what the agent can already reach.
+
+What if you want the agent to act on **your** systems? Read prod data, file a ticket, flag an order — without handing it raw credentials?
+
+That's a different problem. <!-- .element: class="fragment" -->
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -915,7 +938,7 @@ Live walkthrough:
 2. `/mcp`. Confirm `lookupCustomerOrders` and `flagOrderForReview` showed up.
 3. Ask Claude: *"Use the demo-triage MCP to look up `bob.patel@example.com`. Anything off?"* Bob's `ord-bob-001` says order `cancelled`, shipment `in_transit`. That's the thing to spot.
 4. Have Claude call `flagOrderForReview` with a one-line reason.
-5. `cat workshop-context/triage/flags.jsonl`. 
+5. `cat workshop-context/triage/flags.jsonl`.
 
 > That's MCP doing what a skill or a CLI couldn't safely do on its own.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-color="#003594" -->
@@ -965,6 +988,7 @@ All the pieces, composed into an on-call assistant.
 - Skills load progressively. Cheap to add, expensive only when used. <!-- .element: class="fragment" -->
 - A relevant skill make you go faster than no skill. <!-- .element: class="fragment" -->
 - MCP gives the agent typed actions through a surface you control. <!-- .element: class="fragment" -->
+- `/clear` often, delegate the heavy stuff to subagents. <!-- .element: class="fragment" -->
 - Build, don't just consume. <!-- .element: class="fragment" -->
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
