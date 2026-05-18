@@ -117,8 +117,7 @@ A hands-on workshop on setting up your agent for sucess.
 
 ## About me
 
-- Software dev. Embedded → cloud over the last 6 years.
-- Full-stack now. Soft spot for backend & infra. Mediocre at frontend.
+- Full stack software dev.
 - Used Copilot since it was a fancy autocomplete. Always kept AI on my radar from the start.
 - I rarely write code directly anymore — agents do the heavy lifting.
 
@@ -143,9 +142,16 @@ A hands-on workshop on setting up your agent for sucess.
 ## What you'll leave with
 
 - A mental model for **why context matters** <!-- .element: class="fragment" -->
-- Knowing when to use **`AGENTS.md`** vs **skills** vs **MCP** <!-- .element: class="fragment" -->
+- Knowing **how/when** to use the available tools when setting up your agents. 
 - A workflow for **building your own skills** <!-- .element: class="fragment" -->
 - Seen how the pieces compose into a real workflow <!-- .element: class="fragment" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## What this workshop is not about
+
+- The latest hypes and tools in AI.
+- Anything heavily specialised for a single domain/language.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -173,7 +179,7 @@ A hands-on workshop on setting up your agent for sucess.
 
 A SvelteKit + Drizzle + SQLite app. Pretend backend of an order management system. Four tables: `customers`, `orders`, `order_items`, `shipments`.
 
-**Clone it now.** You'll need it from Part 1 onward.
+**Clone it now.** We will need it from time to time.
 
 ```sh
 git clone https://github.com/dracz-fl/svelte-demo-app.git demo-app
@@ -193,7 +199,7 @@ Grab commands from here:
 ## What's in the box
 
 - Small project, with issues planted for the demo.
-- `CLAUDE.md` — deliberately bloated (~340 lines). We trim it in Part 1.
+- `CLAUDE.md` — deliberately bloated (~340 lines). .
 - `workshop-context/triage/` — sample tickets. Used in Parts 3 and 5.
 - `workshop-context/mcp/` — the MCP server we wire up in Part 4.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -219,7 +225,7 @@ When your agent is being dumb dumb, it's a context problem. Not a model problem.
 
 LLMs are **fancy autocomplete on steroids.**
 
-They predict the next token, one at a time.
+They predict the next token, one at a time. They are not magic (even if they seem like one).
 
 <small>tokens ≠ characters. Different models tokenize differently — same prompt, different cost.</small> <!-- .element: class="fragment" -->
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -227,9 +233,11 @@ They predict the next token, one at a time.
 
 ## The context window
 
-> An LLM is a function. Input: a context window. Output: tokens.
+> An LLM is a function. Input: a context window. 
+> 
+> Output: tokens.
 >
-> The window is finite. What goes in is what the model has to work with. Nothing else.
+> The window is finite. What goes in is what the model has to work with. **Nothing else.**
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.9em" class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -258,17 +266,30 @@ That's why you see streaming — one token at a time.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## AGENTS.md / CLAUDE.md
+### Some kind of instruction file
 
-> What makes a good AGENTS.md / CLAUDE.md?
+`AGENTS.md / CLAUDE.md / copilot-instructions.md`
 
-- Added to your conversation. **Keep it lean.**
+> This is your customisation layer.
+
+Its added to your conversation every time.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## What makes it good?
+
 - Project-specific instructions and context.
 - A **curated** set of things the agent **can't easily discover on its own**.
-- Behavioural guidlines [like these](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md)
-- Pointers to other resources for documentation, allowing the AI to read them on demand.
+- Behavioural guidlines [like these](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md).
+- **Pointers to other resources** for documentation, allowing the AI to read them on demand.
+- Most importantly: **Keep it lean.**
+
 
 <small>📖 [humanlayer.dev — writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)</small>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="assets/slides-screenshots/Pasted image 20260518095726.png" alt="" style="object-fit: scale-down">
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -292,13 +313,17 @@ Three things it can't easily figure out on its own:
 
 The window has a limit. The token bill isn't the real cost though.
 
-The real cost is *context rot*: recall degrades as tokens grow. <small>[(Chroma, 2025)](https://research.trychroma.com/context-rot)</small>
+The real cost is **context rot**: recall degrades as tokens grow. <small>[(Chroma, 2025)](https://research.trychroma.com/context-rot)</small>
 
 - Info buried mid-prompt: ~30% accuracy drop. The model literally forgets the middle.
 - Every token competes for attention. More tokens => thinner signal.
 - Similar-but-wrong content actively misleads. Worse than no context.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-> Every token spends from an [attention budget](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents). The cost isn't the API bill alone.
+> Every token spends from an [attention budget](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents). 
+> 
+> The cost isn't the API bill alone.
 
 <aside class="notes"><p>Chroma tested 18 frontier models (Claude Opus 4, GPT-4.1, Gemini 2.5). All showed degradation at every length increment. This is an architectural property of attention, not a training gap.</p>
 </div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
