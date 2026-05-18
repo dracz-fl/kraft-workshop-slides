@@ -141,8 +141,10 @@ A hands-on workshop on setting up your agent for sucess.
 
 ## What you'll leave with
 
+>The fundamentals
+
 - A mental model for **why context matters** <!-- .element: class="fragment" -->
-- Knowing **how/when** to use the available tools when setting up your agents. 
+- Knowing **how/when** to use the available tools when setting up your agents.
 - A workflow for **building your own skills** <!-- .element: class="fragment" -->
 - Seen how the pieces compose into a real workflow <!-- .element: class="fragment" -->
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -151,7 +153,8 @@ A hands-on workshop on setting up your agent for sucess.
 ## What this workshop is not about
 
 - The latest hypes and tools in AI.
-- Anything heavily specialised for a single domain/language.
+- How stuff works in great depths. We don't have enough time for that. :(
+- Anything heavily specialised for a single domain/programming language/framework.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.85em" class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -233,8 +236,8 @@ They predict the next token, one at a time. They are not magic (even if they see
 
 ## The context window
 
-> An LLM is a function. Input: a context window. 
-> 
+> An LLM is a function. Input: a context window.
+>
 > Output: tokens.
 >
 > The window is finite. What goes in is what the model has to work with. **Nothing else.**
@@ -266,6 +269,10 @@ That's why you see streaming — one token at a time.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
+## What customization options do you have?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
 ### Some kind of instruction file
 
 `AGENTS.md / CLAUDE.md / copilot-instructions.md`
@@ -284,7 +291,6 @@ Its added to your conversation every time.
 - **Pointers to other resources** for documentation, allowing the AI to read them on demand.
 - Most importantly: **Keep it lean.**
 
-
 <small>📖 [humanlayer.dev — writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)</small>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
@@ -298,15 +304,14 @@ Its added to your conversation every time.
 
 ## Onboarding the LLM
 
-At session start, the LLM knows nothing about your codebase.
+<small>At session start, the LLM knows nothing about your codebase.</small>
 
-Three things it can't easily figure out on its own:
+<small>Three things it can't easily figure out on its own:</small>
 
 - **The map**: what the stack is, where things live.
 - The **domain:** the vocabulary, entities, and business rules — *the stuff only your team knows.*
 - The local rules, where to look for custom tools, how to run tests, etc...
-
-<small>Code, git history, and docs are all readable. The agent can find those. The domain model rarely lives in any single file.</small>
+<small>Code, git history, and docs are all readable. The agent can find those..</small>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: style="font-size: 0.82em" class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -324,8 +329,8 @@ The real cost is **context rot**: recall degrades as tokens grow. <small>[(Chrom
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-> Every token spends from an [attention budget](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents). 
-> 
+> Every token spends from an [attention budget](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents).
+>
 > The cost isn't the API bill alone.
 
 <aside class="notes"><p>Chroma tested 18 frontier models (Claude Opus 4, GPT-4.1, Gemini 2.5). All showed degradation at every length increment. This is an architectural property of attention, not a training gap.</p>
@@ -908,7 +913,9 @@ Almost everything has their own MCP. It's easy to build.
 
 This **is eager loading**. Every byte costs context tokens before the agent has done a single thing.
 
-**Atlassian's MCP exposes 73 tools**. That alone can eat much of your context before work begins. ( especially with smaller models)
+**Atlassian's MCP exposes 31 tools**. That alone can eat your context before work begins. ( especially with smaller models)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 > Skills are cheap. MCPs are not. Pick narrow.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
