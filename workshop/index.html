@@ -278,9 +278,9 @@ Its added to your conversation every time.
 
 ## What makes it good?
 
-- Project-specific instructions and context.
+- **Project-specific** instructions and context.
 - A **curated** set of things the agent **can't easily discover on its own**.
-- Behavioural guidlines [like these](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md).
+- Behavioural guidelines [like these](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md).
 - **Pointers to other resources** for documentation, allowing the AI to read them on demand.
 - Most importantly: **Keep it lean.**
 
@@ -290,6 +290,9 @@ Its added to your conversation every time.
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 <img src="assets/slides-screenshots/Pasted image 20260518095726.png" alt="" style="object-fit: scale-down">
+
+
+[source](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
@@ -299,8 +302,8 @@ At session start, the LLM knows nothing about your codebase.
 
 Three things it can't easily figure out on its own:
 
-- The map: what the stack is, where things live.
-- **The domain:** the vocabulary, entities, and business rules — *the stuff only your team knows.*
+- **The map**: what the stack is, where things live.
+- The **domain:** the vocabulary, entities, and business rules — *the stuff only your team knows.*
 - The local rules, where to look for custom tools, how to run tests, etc...
 
 <small>Code, git history, and docs are all readable. The agent can find those. The domain model rarely lives in any single file.</small>
